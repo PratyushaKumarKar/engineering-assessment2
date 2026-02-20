@@ -1,6 +1,31 @@
-import { useEffect, useState } from 'react';
+import { memo , useMemo, useEffect, useState } from 'react';
 import { useData } from '../state/DataContext';
 import { Link } from 'react-router-dom';
+import { List } from 'react-window';
+
+const ROW_HEIGHT = 44;
+const LIST_HEIGHT = 220;
+
+const ItemRow = memo(function ItemRow({ index, style, ariaAttributes, items }) {
+  const item = items[index];
+  if (!item) return null;
+
+  return (
+    <div
+      style={{
+        ...style,
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 12px',
+        borderBottom: '1px solid #f0f0f0',
+        boxSizing: 'border-box',
+      }}
+      {...ariaAttributes}
+    >
+      <Link to={'/items/' + item.id}>{item.name}</Link>
+    </div>
+  );
+});
 
 function Items() {
   const { items, pagination, loading, error, fetchItems } = useData();
@@ -43,6 +68,7 @@ function Items() {
   };
   const canPrev = pagination.page > 1;
   const canNext = pagination.page < pagination.totalPages;
+  const rowProps = useMemo(() => ({ items }), [items]);
   return (
     <div style={{ padding: 16 }}>
       <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
@@ -70,13 +96,23 @@ function Items() {
       {!loading && !error && items.length === 0 && <p>No items found.</p>}
 
       {!error && items.length > 0 && (
-        <ul>
-          {items.map((item) => (
-            <li key={item.id}>
-              <Link to={'/items/' + item.id}>{item.name}</Link>
-            </li>
-          ))}
-        </ul>
+        <div
+          style={{
+            height: LIST_HEIGHT,
+            border: '1px solid #e5e7eb',
+            borderRadius: 6,
+            overflow: 'hidden',
+          }}
+        >
+          <List
+            rowComponent={ItemRow}
+            rowCount={items.length}
+            rowHeight={ROW_HEIGHT}
+            rowProps={rowProps}
+            overscanCount={6}
+            style={{ height: LIST_HEIGHT, width: '100%' }}
+          />
+        </div>
       )}
 
       <div style={{ marginTop: 12, display: 'flex', gap: 8, alignItems: 'center' }}>

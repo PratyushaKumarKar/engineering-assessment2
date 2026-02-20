@@ -57,28 +57,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET /api/items
-router.get('/', (req, res, next) => {
-  try {
-    const data = readData();
-    const { limit, q } = req.query;
-    let results = data;
-
-    if (q) {
-      // Simple substring search (sub‑optimal)
-      results = results.filter(item => item.name.toLowerCase().includes(q.toLowerCase()));
-    }
-
-    if (limit) {
-      results = results.slice(0, parseInt(limit));
-    }
-
-    res.json(results);
-  } catch (err) {
-    next(err);
-  }
-});
-
 // GET /api/items/:id
 router.get('/:id', async (req, res, next) => {
   try {
