@@ -19,6 +19,32 @@ function parsePositiveInt(value, fallback) {         //PROTECTING AGAINST BAD QU
   return Number.isNaN(parsed) || parsed < 1 ? fallback : parsed; 
 }
 
+function validatePayload(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    return { ok: false, error: 'Request body must be a JSON object' };
+  }
+  const name = typeof payload.name === 'string' ? payload.name.trim() : '';
+  const category = typeof payload.category === 'string' ? payload.category.trim() : '';
+  const price = Number(payload.price);
+  if (!name) {
+    return { ok: false, error: 'name is required and must be a non-empty string' };
+  }
+  if (!category) {
+    return { ok: false, error: 'category is required and must be a non-empty string' };
+  }
+  if (!Number.isFinite(price) || price < 0) {
+    return { ok: false, error: 'price is required and must be a number >= 0' };
+  }
+  return {
+    ok: true,
+    value: {
+      name,
+      category,
+      price,
+    },
+  };
+}
+
 // GET /api/items?page=1&limit=10&q=desk
 router.get('/', async (req, res, next) => {
   try {
@@ -77,10 +103,15 @@ router.get('/:id', async (req, res, next) => {
 // POST /api/items
 router.post('/', async (req, res, next) => {
   try {
-    // TODO: Validate payload (intentional omission)
-    const item = req.body;
+    const validation = validatePayload(req.body);
+    if (!validation.ok) {
+      return res.status(400).json({ error: validation.error });
+    }
+    const item = {
+      id: Date.now(),
+      ...validation.value,
+    };
     const data = await readData();
-    item.id = Date.now();
     data.push(item);
     await writeData(data);
     res.status(201).json(item);
