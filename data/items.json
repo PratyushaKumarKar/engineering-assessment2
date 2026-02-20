@@ -3,5 +3,20 @@
   { "id": 2, "name": "Noise Cancelling Headphones", "category": "Electronics", "price": 399 },
   { "id": 3, "name": "Ultra‑Wide Monitor", "category": "Electronics", "price": 999 },
   { "id": 4, "name": "Ergonomic Chair", "category": "Furniture", "price": 799 },
-  { "id": 5, "name": "Standing Desk", "category": "Furniture", "price": 1199 }
+  { "id": 5, "name": "Standing Desk", "category": "Furniture", "price": 1199 },
+  { "id": 6, "name": "Wireless Keyboard", "category": "Electronics", "price": 129 },
+  { "id": 7, "name": "Mechanical Mouse", "category": "Electronics", "price": 89 },
+  { "id": 8, "name": "Desk Lamp", "category": "Furniture", "price": 49 },
+  { "id": 9, "name": "External SSD 1TB", "category": "Electronics", "price": 199 },
+  { "id": 10, "name": "Wireless Charger", "category": "Electronics", "price": 59 },
+  { "id": 11, "name": "Bluetooth Speaker", "category": "Electronics", "price": 149 },
+  { "id": 12, "name": "Ergonomic Keyboard", "category": "Electronics", "price": 179 },
+  { "id": 13, "name": "USB-C Hub", "category": "Electronics", "price": 99 },
+  { "id": 14, "name": "Monitor Arm", "category": "Furniture", "price": 199 },
+  { "id": 15, "name": "Desk Mat", "category": "Furniture", "price": 29 },
+  { "id": 16, "name": "Webcam", "category": "Electronics", "price": 79 },
+  { "id": 17, "name": "Desk Organizer", "category": "Furniture", "price": 39 },
+  { "id": 18, "name": "Laptop Stand", "category": "Furniture", "price": 89 },
+  { "id": 19, "name": "Gaming Mouse Pad", "category": "Electronics", "price": 49 },
+  { "id": 20, "name": "Bluetooth Adapter", "category": "Electronics", "price": 39 }
 ]
